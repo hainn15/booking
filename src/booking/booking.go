@@ -48,6 +48,30 @@ func main() {
 	fmt.Println(&remainingTickets) //print hash memory access of value variable remainingTicket -> that basicly point
 
 	remainingTickets = remainingTickets - userticket
-	fmt.Printf("Remaining Tickets: %v", remainingTickets)
+	fmt.Printf("Remaining Tickets: %v \n", remainingTickets)
+
+	//array and Slices
+	//arry in Go fixed size (how many elements the array can hold)
+	//array Only the same data type can be stored
+
+	//var bookings = [50]string{"a","b","c"} //array size 50 with 3 elements
+
+	var bookings [50]string
+
+	//adding new elements accessing by thir index(position)
+	bookings[0] = firstName
+	bookings[1] = lastName
+	bookings[2] = email
+
+	fmt.Println(bookings)
+
+	// a list that is more dynamic in size, automatic expands when new elemants are added.
+	//Slices are more felixible and powerfull slices are index-based and have a size, but is resized when needed
+	var booking1 []string
+	var numTickets []int
+	//append - adds the element at the end pf the slice, grow the slice if a grater capacity is needed
+	booking1 = append(booking1, firstName+" "+lastName, email)
+	numTickets = append(numTickets, userticket)
+	fmt.Printf("This is all our booking list %v %v \n", booking1, numTickets)
 
 }
