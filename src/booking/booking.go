@@ -12,6 +12,8 @@ func main() {
 	//variable for ticket remaining
 	var remainingTickets = 50
 
+	greetUser()
+
 	fmt.Println("Welcome to ", conferenceName1, " Booking application")
 	fmt.Println("We have total of", conferenceTicket, "tickets and ", remainingTickets, "are still avaiable.")
 	fmt.Println("Get your ticket here to attend")
@@ -119,7 +121,7 @@ func main() {
 
 			fmt.Printf("We only have %v ticket remaining, so you can book %v tickets \n", remainingTickets, userticket)
 
-		}
+		} //end of if
 
 		// MAKE THE CHECK OF SOLD OUT TICKET
 
@@ -132,6 +134,14 @@ func main() {
 
 		}
 
-	}
+	} //end of for loop
 
-}
+} // end of main funtion
+
+// funtcion additional can execute when it called in main function
+
+func greetUser() {
+
+	fmt.Println("Welcome to Our Conference!")
+
+} //end of func greetUser
