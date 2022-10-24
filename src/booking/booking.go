@@ -9,20 +9,16 @@ func main() {
 
 	var conferenceName1 = "Go Conference"
 	const conferenceTicket = 50 //const Constants are like variables, exept that their value cannot be changed
+
 	//variable for ticket remaining
 	var remainingTickets = 50
 
-	greetUser()
+	//input welcome to function
 
-	fmt.Println("Welcome to ", conferenceName1, " Booking application")
-	fmt.Println("We have total of", conferenceTicket, "tickets and ", remainingTickets, "are still avaiable.")
-	fmt.Println("Get your ticket here to attend")
+	greetUser(conferenceName1, conferenceTicket, remainingTickets)
 
 	//print formatted data
 	//%v the value in a defualt format
-	fmt.Printf("Welcome to %v Booking application \n", conferenceName1)
-	fmt.Printf("We have total %v of tickets and %v are still avaiable \n", conferenceTicket, remainingTickets)
-	fmt.Println("Get your Ticket here to attend")
 
 	//BEGINING OF LOGIC WE WRITE FOR LOOP.
 
@@ -95,12 +91,9 @@ func main() {
 
 			//print out first name each.
 			//for each loop slices or array
+			//Call Print first name function
 
-			firstNames := []string{}
-			for _, booking := range booking1 { //index replace by _ ignore a variable you don't want to use.
-				var names = strings.Fields(booking)
-				firstNames = append(firstNames, names[0])
-			}
+			printFirstName(booking1) //call funtion and parameter
 
 			fmt.Printf("This is all our booking list %v \n", firstNames)
 			fmt.Printf("Thank Mr. %v %v booked %v tickets and please check email address: %v confirm your booking schedule.\n", lastName, firstName, userticket, email)
@@ -140,8 +133,18 @@ func main() {
 
 // funtcion additional can execute when it called in main function
 
-func greetUser() {
+func greetUser(conferenceName1 string, conferenceTicket int, remainingTickets int) {
 
-	fmt.Println("Welcome to Our Conference!")
+	fmt.Printf("Welcome to Our %v! \n", conferenceName1)
+	fmt.Printf("We have total %v of tickets and %v are still avaiable \n", conferenceTicket, remainingTickets)
+	fmt.Println("Get your Ticket here to attend")
 
 } //end of func greetUser
+
+func printFirstName(booking1 []string) {
+	firstNames := []string{}
+	for _, booking := range booking1 { //index replace by _ ignore a variable you don't want to use.
+		var names = strings.Fields(booking)
+		firstNames = append(firstNames, names[0])
+	}
+}
