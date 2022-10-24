@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 
@@ -19,59 +22,116 @@ func main() {
 	fmt.Printf("We have total %v of tickets and %v are still avaiable \n", conferenceTicket, remainingTickets)
 	fmt.Println("Get your Ticket here to attend")
 
-	//Data type
-	var firstName string
-	var lastName string
-	var email string
-	var userticket int
+	//BEGINING OF LOGIC WE WRITE FOR LOOP.
 
-	// ask their name
-	fmt.Println("Enter Your Last Name: ")
-	fmt.Scan(&lastName)
+	for { //infinite loop - keep asking after 1 booking
 
-	fmt.Println("Enter Your First Name: ")
-	fmt.Scan(&firstName)
+		//Data type
+		var firstName string
+		var lastName string
+		var email string
+		var userticket int
 
-	fmt.Println("Enter Your Email Address: ")
-	fmt.Scan(&email)
+		// ask their name
 
-	fmt.Println("How many tickets you want to book?")
-	fmt.Scan(&userticket) //Scan funtion read the value user enter in the memory and assign that value to userName Variable
-	fmt.Printf("Thank Mr. %v %v booked %v tickets and please check email address: %v confirm your booking schedule.\n", lastName, firstName, userticket, email)
+		fmt.Println("Enter Your Last Name: ")
+		fmt.Scan(&lastName)
 
-	//int8, int16 (-32768-32768), int32, int64 - uint8, uint16 (0 - 65535), uint32, uint64
+		fmt.Println("Enter Your First Name: ")
+		fmt.Scan(&firstName)
 
-	//collect user input, write to a file.
+		fmt.Println("Enter Your Email Address: ")
+		fmt.Scan(&email)
 
-	//pointer iss variable that points to the memory address of another variable in Golang pointer also call special variable
-	fmt.Println(remainingTickets)  //print value remaining ticket
-	fmt.Println(&remainingTickets) //print hash memory access of value variable remainingTicket -> that basicly point
+		fmt.Println("How many tickets you want to book?")
+		fmt.Scan(&userticket) //Scan funtion read the value user enter in the memory and assign that value to userName Variable
 
-	remainingTickets = remainingTickets - userticket
-	fmt.Printf("Remaining Tickets: %v \n", remainingTickets)
+		//int8, int16 (-32768-32768), int32, int64 - uint8, uint16 (0 - 65535), uint32, uint64
 
-	//array and Slices
-	//arry in Go fixed size (how many elements the array can hold)
-	//array Only the same data type can be stored
+		//CHECK USER INPUT VALIDATION
 
-	//var bookings = [50]string{"a","b","c"} //array size 50 with 3 elements
+		isValidName := len(firstName) >= 2 && len(lastName) >= 2
+		isValidEmail := strings.Contains(email, "@")
+		isValidTickets := userticket > 0 && userticket < 5 && userticket <= remainingTickets
 
-	var bookings [50]string
+		//collect user input, write to a file.
 
-	//adding new elements accessing by thir index(position)
-	bookings[0] = firstName
-	bookings[1] = lastName
-	bookings[2] = email
+		//pointer iss variable that points to the memory address of another variable in Golang pointer also call special variable
+		fmt.Println(remainingTickets)  //print value remaining ticket
+		fmt.Println(&remainingTickets) //print hash memory access of value variable remainingTicket -> that basicly point
 
-	fmt.Println(bookings)
+		//CHECK USER BOOK NO MORE THAN TICKER AVAILABLE or LESSER TICKET AVAIABLE.
+		if isValidName && isValidEmail && isValidTickets {
 
-	// a list that is more dynamic in size, automatic expands when new elemants are added.
-	//Slices are more felixible and powerfull slices are index-based and have a size, but is resized when needed
-	var booking1 []string
-	var numTickets []int
-	//append - adds the element at the end pf the slice, grow the slice if a grater capacity is needed
-	booking1 = append(booking1, firstName+" "+lastName, email)
-	numTickets = append(numTickets, userticket)
-	fmt.Printf("This is all our booking list %v %v \n", booking1, numTickets)
+			remainingTickets = remainingTickets - userticket
+			fmt.Printf("Remaining Tickets: %v \n", remainingTickets)
+
+			//array and Slices
+			//arry in Go fixed size (how many elements the array can hold)
+			//array Only the same data type can be stored
+
+			//var bookings = [50]string{"a","b","c"} //array size 50 with 3 elements
+
+			var bookings [50]string
+
+			//adding new elements accessing by thir index(position)
+			bookings[0] = firstName
+			bookings[1] = lastName
+			bookings[2] = email
+
+			fmt.Println(bookings)
+
+			//PRINT OUT SUMMARY BOOKING.
+
+			// a list that is more dynamic in size, automatic expands when new elemants are added.
+			//Slices are more felixible and powerfull slices are index-based and have a size, but is resized when needed
+			var booking1 []string
+			var numTickets []int
+			//append - adds the element at the end of the slice, grow the slice if a grater capacity is needed
+			booking1 = append(booking1, firstName+" "+lastName, email)
+			numTickets = append(numTickets, userticket)
+
+			//print out first name each.
+			//for each loop slices or array
+
+			firstNames := []string{}
+			for _, booking := range booking1 { //index replace by _ ignore a variable you don't want to use.
+				var names = strings.Fields(booking)
+				firstNames = append(firstNames, names[0])
+			}
+
+			fmt.Printf("This is all our booking list %v \n", firstNames)
+			fmt.Printf("Thank Mr. %v %v booked %v tickets and please check email address: %v confirm your booking schedule.\n", lastName, firstName, userticket, email)
+
+		} else {
+
+			//Remind User input invalid data
+
+			if !isValidName {
+				fmt.Println("First Name or Last name is too short")
+			}
+			if !isValidEmail {
+				fmt.Println("Email Address is  invalid!")
+			}
+			if !isValidTickets {
+				fmt.Println("Your number ticket is invalid")
+			}
+
+			fmt.Printf("We only have %v ticket remaining, so you can book %v tickets \n", remainingTickets, userticket)
+
+		}
+
+		// MAKE THE CHECK OF SOLD OUT TICKET
+
+		var noTicketremaining bool = remainingTickets == 0 //boolean datatype
+
+		if noTicketremaining {
+			// break the loop
+			fmt.Println("Our Conference is booked out.")
+			break
+
+		}
+
+	}
 
 }
